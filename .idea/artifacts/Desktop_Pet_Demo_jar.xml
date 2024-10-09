@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Desktop-Pet-Demo:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Desktop_Pet_Demo_jar</output-path>
+    <root id="archive" name="Desktop-Pet-Demo.jar">
+      <element id="module-output" name="Desktop-Pet-Demo" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/java/dev/jna/jna/5.13.0/jna-5.13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/java/dev/jna/jna-platform/5.13.0/jna-platform-5.13.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
