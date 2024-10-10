@@ -1,24 +1,23 @@
 package com.amh.panel;
 
-import com.amh.entity.MyRect;
+import com.amh.constants.CorgiAssetName;
+import com.amh.entity.Corgi;
 
 import java.awt.*;
 
 import static com.amh.common.CommonData.FPS;
 import static com.amh.common.CommonData.UPS;
-import static com.amh.common.CommonFunctions.getRandomColor;
-import static com.amh.common.CommonFunctions.getRandomSize;
 
 public class GameWindow implements Runnable{
 
     private Thread gameThread;
     private volatile boolean isGameRunning = true;
+    private Corgi corgi;
 
     GamePanel gamePanel;
-    private MyRect myRect;
 
     public GameWindow() {
-        initMyRect();
+        initRequiredData();
         gamePanel = new GamePanel(this);
         new GameFrame(gamePanel);
 
@@ -26,8 +25,8 @@ public class GameWindow implements Runnable{
         startGameThread();
     }
 
-    public void initMyRect() {
-        myRect = new MyRect(0,0,getRandomSize(),getRandomSize(),getRandomColor());
+    private void initRequiredData() {
+        corgi = new Corgi(10,10,64,64,2, CorgiAssetName.CORGI_WITH_TAIL);
     }
 
     public void startGameThread() {
@@ -36,11 +35,11 @@ public class GameWindow implements Runnable{
     }
 
     public void update() {
-        myRect.update();
+        corgi.update();
     }
 
     public void render(Graphics g) {
-        myRect.render(g);
+        corgi.render(g);
     }
 
     @Override
