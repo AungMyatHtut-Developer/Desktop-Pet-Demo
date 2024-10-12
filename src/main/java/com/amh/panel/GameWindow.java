@@ -1,18 +1,22 @@
 package com.amh.panel;
 
 import com.amh.constants.CorgiAssetName;
-import com.amh.entity.Corgi;
+import com.amh.constants.MovementDirection;
+import com.amh.constants.PetAction;
+import com.amh.entity.*;
+import com.amh.util.AssetStore;
 
 import java.awt.*;
 
-import static com.amh.common.CommonData.FPS;
-import static com.amh.common.CommonData.UPS;
+import static com.amh.common.CommonData.*;
+import static com.amh.common.CommonFunctions.RANDOMX;
+import static com.amh.common.CommonFunctions.RANDOMY;
 
 public class GameWindow implements Runnable{
 
     private Thread gameThread;
     private volatile boolean isGameRunning = true;
-    private Corgi corgi;
+    private PetV2 pet;
 
     GamePanel gamePanel;
 
@@ -26,7 +30,10 @@ public class GameWindow implements Runnable{
     }
 
     private void initRequiredData() {
-        corgi = new Corgi(10,10,64,64,2, CorgiAssetName.CORGI_WITH_TAIL);
+        Animation animation = new Animation(AssetStore.GetCorgiAnimations(CorgiAssetName.CORGI_WITH_TAIL), PetAction.SIT);
+        Movement movement = new Movement(SPEED_X, SPEED_Y);
+
+        pet = new CorgiV2(RANDOMX(), RANDOMY(),CORGI_WIDTH, CORGI_HEIGHT,animation,movement);
     }
 
     public void startGameThread() {
@@ -35,15 +42,19 @@ public class GameWindow implements Runnable{
     }
 
     public void update() {
-        corgi.update();
+        pet.update();
     }
 
     public void render(Graphics g) {
-        corgi.render(g);
+        pet.render(g);
     }
+
 
     @Override
     public void run() {
+
+        double deltaFPS = 0;
+        double deltaUPS = 0;
 
         long currentTimeTrackForFPS;
         long previousTimeTrackForFPS = 0;
@@ -59,18 +70,22 @@ public class GameWindow implements Runnable{
 
         while (isGameRunning) {
 
-            currentTimeTrackForFPS = System.nanoTime();
-            if(currentTimeTrackForFPS - previousTimeTrackForFPS >= FPS){
-                previousTimeTrackForFPS = currentTimeTrackForFPS;
-                gamePanel.repaint();
-                frames++;
-            }
-
             currentTimeTrackForUPS = System.nanoTime();
-            if (currentTimeTrackForUPS - previousTimeTrackForUPS >= UPS) {
+            deltaUPS = (double) (currentTimeTrackForUPS - previousTimeTrackForUPS) / UPS;
+            if (deltaUPS >= 1) {
                 previousTimeTrackForUPS = currentTimeTrackForUPS;
                 update();
                 updates++;
+                deltaUPS--;
+            }
+
+            currentTimeTrackForFPS = System.nanoTime();
+            deltaFPS = (double) (currentTimeTrackForFPS - previousTimeTrackForFPS) / FPS;
+            if(deltaFPS >= 1){
+                previousTimeTrackForFPS = currentTimeTrackForFPS;
+                gamePanel.repaint();
+                frames++;
+                deltaFPS--;
             }
 
             timeTrack = System.currentTimeMillis();

@@ -14,4 +14,7 @@ public class Main {
  * -Make app icon not to show on task bar.
  *
  * -Create common image loader class and load sprite sheets
+ * -Add Mouse Handler
+ * -Restructure Pet, Movement, Animation to separate the concerns
+ * -Added corgi animations
  */

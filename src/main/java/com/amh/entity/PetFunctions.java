@@ -8,4 +8,7 @@ public interface PetFunctions {
     void update();
     void eating();
     void animate();
+    void move(int x, int y);
+    void updatePosition();
+    void stop();
 }

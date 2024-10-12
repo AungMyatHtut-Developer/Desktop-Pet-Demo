@@ -15,4 +15,8 @@ public class CommonData {
     public static final String CORGI_TRICOLOR_WITH_TAIL_IMG ="tricolorcorgi-asset-tail.png";
     public static final String CORGI_TRICOLOR_WITH_NO_TAIL_IMG ="tricolorcorgi-asset-notail.png";
 
+    public static final float CORGI_HEIGHT = 128, CORGI_WIDTH = 128;
+    public static final float CORGI_MOVEMENT_SPEED = 1.2f;
+    public static final float SPEED_X = 2f, SPEED_Y  =2f;
+
 }
