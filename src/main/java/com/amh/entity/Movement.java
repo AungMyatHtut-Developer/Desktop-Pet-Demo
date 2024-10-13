@@ -1,5 +1,6 @@
 package com.amh.entity;
 
+import com.amh.constants.MovementDirection;
 import com.amh.constants.PetAction;
 
 import static com.amh.common.CommonData.CORGI_MOVEMENT_SPEED;
@@ -9,13 +10,14 @@ public class Movement {
 
     private float speedX, speedY;
     private int switchDirection = -1;
+    private MovementDirection movementDirectionX;
 
     public Movement(float speedX, float speedY) {
         this.speedX = speedX;
         this.speedY = speedY;
     }
 
-    public void updatePosition(PetV2 pet) {
+    public void updatePosition(Pet pet) {
 
         speedX = checkAnimation(pet.animation.getPetAction(), speedX);
 
@@ -25,10 +27,12 @@ public class Movement {
         pet.animation.getPetAction() == PetAction.SNIFF_WALK){
             if (pet.x > GAME_SCREEN_SIZE.width - pet.width) {
                 speedX *= switchDirection;
+                movementDirectionX = MovementDirection.LEFT;
             }
 
             if (pet.x < 0) {
                 speedX *= switchDirection;
+                movementDirectionX = MovementDirection.RIGHT;
             }
 
             if (pet.y > GAME_SCREEN_SIZE.height - pet.height) {
@@ -60,5 +64,13 @@ public class Movement {
     public void stop() {
         speedX = 0;
         speedY = 0;
+    }
+
+    public MovementDirection getMovementDirection() {
+        if (movementDirectionX != null) {
+            return this.movementDirectionX;
+        }
+
+        return MovementDirection.RIGHT;
     }
 }

@@ -17,4 +17,7 @@ public class Main {
  * -Add Mouse Handler
  * -Restructure Pet, Movement, Animation to separate the concerns
  * -Added corgi animations
+ *
+ * -Added corgi control animations like stop and run randomly
+ * -Refactor some objects and classes names to adapt design patterns
  */

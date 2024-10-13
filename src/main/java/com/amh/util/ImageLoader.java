@@ -14,7 +14,6 @@ public class ImageLoader {
                 throw new IOException("Image not found!");
             }
             image = ImageIO.read(inputStream);
-            System.out.println("We found the image");
 
         } catch (Exception e) {
             System.out.println("Exception happened when loading Sprite. Error : "+ e);

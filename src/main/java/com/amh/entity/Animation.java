@@ -48,4 +48,8 @@ public class Animation {
     public PetAction getPetAction() {
         return petAction;
     }
+
+    public void setPetAction(PetAction petAction) {
+        this.petAction = petAction;
+    }
 }

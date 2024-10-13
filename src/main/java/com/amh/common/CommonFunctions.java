@@ -1,5 +1,7 @@
 package com.amh.common;
 
+import com.amh.constants.PetAction;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -30,6 +32,28 @@ public class CommonFunctions {
 
     public static float RANDOM_Y_MOVEMENT() {
         return random.nextFloat();
+    }
+
+    public static PetAction RANDOM_MOVEMENT_ACTION() {
+        int ran = random.nextInt(4);
+
+        switch (ran) {
+            case 0: return PetAction.JUMP;
+            case 2: return PetAction.RUN;
+            case 3: return PetAction.SNIFF_WALK;
+            default: return PetAction.WALK;
+        }
+    }
+
+    public static PetAction RANDOM_STOP_ACTION() {
+        int ran = random.nextInt(4);
+
+        switch (ran) {
+            case 0: return PetAction.IDLE1;
+            case 2: return PetAction.IDLE2;
+            case 3: return PetAction.SIT;
+            default: return PetAction.SNIFF;
+        }
     }
 }
 

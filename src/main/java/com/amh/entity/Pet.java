@@ -1,58 +1,34 @@
 package com.amh.entity;
 
-import com.amh.constants.PetAction;
-
 import java.awt.*;
 
-public class Pet implements PetFunctions {
+public abstract class Pet {
 
-    protected float x, y, width, height;
-    protected float deltaX, deltaY;
-    protected int movementSpeed;
-    protected int action, animationTick;
-    protected PetAction petAction;
-    protected int frameCount;
+    protected float x , y;
+    protected float width, height;
+    protected Animation animation;
+    protected Movement movement;
+    protected HitBox hitBox;
+    protected boolean isStop;
 
-    protected float hitBoxX, hitBoxY, hitBoxWidth, hitBoxHeight;
-
-    public Pet(int x, int y, int width, int height, int movementSpeed, float hitBoxX, float hitBoxY, float hitBoxWidth, float hitBoxHeight, PetAction petAction) {
+    public Pet(float x, float y, float width, float height, Animation animation, Movement movement) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.movementSpeed = movementSpeed;
-        this.hitBoxX = hitBoxX;
-        this.hitBoxY = hitBoxY;
-        this.hitBoxWidth = hitBoxWidth;
-        this.hitBoxHeight = hitBoxHeight;
-        this.petAction = petAction;
+        this.animation = animation;
+        this.movement = movement;
+        this.hitBox = new HitBox(x, y, width, height);
     }
 
-    @Override
-    public void makeVoice() {}
+    public abstract void makeSound();
 
-    @Override
-    public void render(Graphics g) {}
+    public abstract void render(Graphics g);
 
-    @Override
-    public void update() {}
+    public abstract void update();
 
-    @Override
-    public void eating() {}
+    public abstract void move(int x, int y);
 
-    @Override
-    public void animate() {}
+    public abstract void stopPet();
 
-    @Override
-    public void move(int x, int y) {}
-
-    @Override
-    public void updatePosition() {
-
-    }
-
-    @Override
-    public void stop() {
-
-    }
 }
