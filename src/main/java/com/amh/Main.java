@@ -20,4 +20,6 @@ public class Main {
  *
  * -Added corgi control animations like stop and run randomly
  * -Refactor some objects and classes names to adapt design patterns
+ *
+ * -Added system tray icon panel feature
  */
