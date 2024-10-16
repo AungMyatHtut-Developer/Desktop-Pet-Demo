@@ -1,6 +1,7 @@
 package com.amh.common;
 
-import com.amh.constants.PetAction;
+import com.amh.constants.CatAction;
+import com.amh.constants.CorgiAction;
 
 import java.awt.*;
 import java.util.Random;
@@ -23,36 +24,60 @@ public class CommonFunctions {
     }
 
     public static int RANDOMX() {
-        return random.nextInt((int) GAME_SCREEN_SIZE.getWidth());
+        return random.nextInt((int) GAME_SCREEN_SIZE.getWidth() - 200);
     }
 
     public static int RANDOMY() {
-        return random.nextInt((int) GAME_SCREEN_SIZE.getHeight());
+        return random.nextInt((int) GAME_SCREEN_SIZE.getHeight() - 200);
     }
 
     public static float RANDOM_Y_MOVEMENT() {
         return random.nextFloat();
     }
 
-    public static PetAction RANDOM_MOVEMENT_ACTION() {
+    public static CorgiAction RANDOM_MOVEMENT_ACTION_FOR_CORGI() {
         int ran = random.nextInt(4);
 
         switch (ran) {
-            case 0: return PetAction.JUMP;
-            case 2: return PetAction.RUN;
-            case 3: return PetAction.SNIFF_WALK;
-            default: return PetAction.WALK;
+            case 0: return CorgiAction.JUMP;
+            case 2: return CorgiAction.RUN;
+            case 3: return CorgiAction.SNIFF_WALK;
+            default: return CorgiAction.WALK;
         }
     }
 
-    public static PetAction RANDOM_STOP_ACTION() {
+    public static CorgiAction RANDOM_STOP_ACTION_FOR_CORGI() {
         int ran = random.nextInt(4);
 
         switch (ran) {
-            case 0: return PetAction.IDLE1;
-            case 2: return PetAction.IDLE2;
-            case 3: return PetAction.SIT;
-            default: return PetAction.SNIFF;
+            case 0: return CorgiAction.IDLE1;
+            case 2: return CorgiAction.IDLE2;
+            case 3: return CorgiAction.SIT;
+            default: return CorgiAction.SNIFF;
+        }
+    }
+
+    public static CatAction RANDOM_STOP_ACTION_FOR_CAT() {
+        int ran = random.nextInt(8);
+
+        switch (ran) {
+            case 1: return CatAction.IDLE2;
+            case 2: return CatAction.IDLE3;
+            case 3: return CatAction.IDLE4;
+            case 4: return CatAction.PLAY;
+            case 5: return CatAction.AFRAID;
+            case 6: return CatAction.SLEEP;
+            case 7: return CatAction.CATCH;
+            default: return CatAction.IDLE1;
+        }
+    }
+
+    public static CatAction RANDOM_MOVEMENT_ACTION_FOR_CAT() {
+        int ran = random.nextInt(2);
+
+        switch (ran) {
+            case 1: return CatAction.JUMP_RUN;
+            default: return CatAction.WALK;
         }
     }
 }

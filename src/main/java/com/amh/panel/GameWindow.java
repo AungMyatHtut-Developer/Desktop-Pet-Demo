@@ -1,7 +1,7 @@
 package com.amh.panel;
 
-import com.amh.constants.CorgiAssetName;
-import com.amh.constants.PetAction;
+import com.amh.constants.PetAssetName;
+import com.amh.constants.CorgiAction;
 import com.amh.entity.*;
 import com.amh.util.AssetStore;
 
@@ -29,7 +29,7 @@ public class GameWindow implements Runnable{
     }
 
     private void initRequiredData() {
-        Animation animation = new Animation(AssetStore.GetCorgiAnimations(CorgiAssetName.CORGI_WITH_NO_TAIL), PetAction.SNIFF_WALK);
+        Animation animation = new Animation(AssetStore.GetCorgiAnimations(PetAssetName.CORGI_WITH_NO_TAIL), CorgiAction.SNIFF_WALK);
         Movement movement = new Movement(SPEED_X, SPEED_Y);
 
         pet = new Dog(RANDOMX(), RANDOMY(),CORGI_WIDTH, CORGI_HEIGHT,animation,movement);
@@ -44,7 +44,7 @@ public class GameWindow implements Runnable{
         pet.update();
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         pet.render(g);
     }
 
@@ -54,6 +54,18 @@ public class GameWindow implements Runnable{
 
     public void stopPet() {
         pet.stopPet();
+    }
+
+    public void changePetColor(PetAssetName petAssetName) {
+        pet.changeColor(petAssetName);
+    }
+
+    public void changePet(Pet pet) {
+        this.pet = pet;
+    }
+
+    public Pet getPet() {
+        return this.pet;
     }
 
 

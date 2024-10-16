@@ -1,6 +1,13 @@
 package com.amh.panel;
 
-import com.amh.constants.CorgiAssetName;
+import com.amh.constants.CatAction;
+import com.amh.constants.CorgiAction;
+import com.amh.constants.PetAssetName;
+import com.amh.entity.Animation;
+import com.amh.entity.Cat;
+import com.amh.entity.Dog;
+import com.amh.entity.Movement;
+import com.amh.util.AssetStore;
 import com.amh.util.ImageLoader;
 import com.sun.jna.Native;
 import com.sun.jna.platform.win32.User32;
@@ -16,19 +23,23 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 import static com.amh.common.CommonData.*;
-import static com.amh.constants.CorgiAssetName.CORGI_WITH_NO_TAIL;
+import static com.amh.common.CommonFunctions.RANDOMX;
+import static com.amh.common.CommonFunctions.RANDOMY;
+import static com.amh.constants.PetAssetName.CORGI_WITH_NO_TAIL;
 
 public class GameFrame extends JFrame{
     private static final int WS_EX_TOOLWINDOW = 0x00000080;
     private TrayIcon trayIcon;
+    private GamePanel gamePanel;
 
     public GameFrame(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
         setTitle(GAME_TITLE);
         setUndecorated(true);
         setAlwaysOnTop(true);
         setBackground(BACKGROUND_COLOR);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        add(gamePanel);
+        add(this.gamePanel);
         pack();
         setVisible(true);
 
@@ -82,6 +93,38 @@ public class GameFrame extends JFrame{
             }
         });
 
+
+        // New Menu for Dog Colors
+        Menu dogColorsMenu = new Menu("Dog Colors");
+        MenuItem triColorWithNoTail = new MenuItem("Tri Color No Tail");
+        MenuItem triColorWithTail = new MenuItem("Tri Color With Tail");
+        MenuItem lightColorWithNoTail = new MenuItem("Light Color No Tail");
+        MenuItem lightColorWithTail = new MenuItem("Light Color With Tail");
+
+        triColorWithNoTail.addActionListener(e -> changeDogColor(PetAssetName.CORGI_TRI_COLOR_WITH_NO_TAIL));
+        triColorWithTail.addActionListener(e -> changeDogColor(PetAssetName.CORGI_TRI_COLOR_WITH_TAIL));
+        lightColorWithNoTail.addActionListener(e -> changeDogColor(CORGI_WITH_NO_TAIL));
+        lightColorWithTail.addActionListener(e -> changeDogColor(PetAssetName.CORGI_WITH_TAIL));
+
+
+        dogColorsMenu.add(triColorWithNoTail);
+        dogColorsMenu.add(triColorWithTail);
+        dogColorsMenu.add(lightColorWithNoTail);
+        dogColorsMenu.add(lightColorWithTail);
+        popupMenu.add(dogColorsMenu);
+
+        // New Menu for Companion Types
+        Menu companionTypeMenu = new Menu("Companion Type");
+        MenuItem corgiItem = new MenuItem("Dog");
+        MenuItem catItem = new MenuItem("Cat");
+
+        corgiItem.addActionListener(e -> changeCompanionType("Dog"));
+        catItem.addActionListener(e -> changeCompanionType("Cat"));
+
+        companionTypeMenu.add(corgiItem);
+        companionTypeMenu.add(catItem);
+        popupMenu.add(companionTypeMenu);
+
         popupMenu.add(openItem);
         popupMenu.add(exitItem);
         trayIcon.setPopupMenu(popupMenu);
@@ -101,5 +144,30 @@ public class GameFrame extends JFrame{
         g.drawImage(originalImage, 0, 0, width, height, null);
         g.dispose();
         return resizedImage;
+    }
+
+    // Define the new methods
+    private void changeDogColor(PetAssetName petAssetName) {
+        gamePanel.gameWindow.changePetColor(petAssetName);
+    }
+
+    private void changeCompanionType(String type) {
+
+        if (type.contentEquals("Dog")) {
+            Animation animation = new Animation(
+                    AssetStore.GetCorgiAnimations(PetAssetName.CORGI_WITH_NO_TAIL),
+                    CorgiAction.SNIFF_WALK);
+            Movement movement = new Movement(SPEED_X, SPEED_Y);
+
+            gamePanel.gameWindow.changePet(new Dog(gamePanel.gameWindow.getPet().getX(), gamePanel.gameWindow.getPet().getY(),CORGI_WIDTH, CORGI_HEIGHT,animation,movement));
+        } else if (type.contentEquals("Cat")) {
+            Animation animation = new Animation(
+                    AssetStore.GetCatAnimations(PetAssetName.CAT),
+                    CatAction.WALK);
+            Movement movement = new Movement(SPEED_X, SPEED_Y);
+            gamePanel.gameWindow.changePet(new Cat(gamePanel.gameWindow.getPet().getX(), gamePanel.gameWindow.getPet().getY(),CAT_WIDTH * 1.5f, CAT_HEIGHT * 1.5f, animation, movement));
+        }
+
+
     }
 }

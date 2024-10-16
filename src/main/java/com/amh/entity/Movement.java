@@ -1,10 +1,12 @@
 package com.amh.entity;
 
+import com.amh.constants.CatAction;
+import com.amh.constants.CorgiAction;
 import com.amh.constants.MovementDirection;
 import com.amh.constants.PetAction;
 
-import static com.amh.common.CommonData.CORGI_MOVEMENT_SPEED;
-import static com.amh.common.CommonData.GAME_SCREEN_SIZE;
+import static com.amh.common.CommonData.*;
+import static com.amh.common.CommonFunctions.RANDOM_Y_MOVEMENT;
 
 public class Movement {
 
@@ -21,44 +23,79 @@ public class Movement {
 
         speedX = checkAnimation(pet.animation.getPetAction(), speedX);
 
-        if(pet.animation.getPetAction() == PetAction.JUMP ||
-        pet.animation.getPetAction() == PetAction.WALK ||
-        pet.animation.getPetAction() == PetAction.RUN ||
-        pet.animation.getPetAction() == PetAction.SNIFF_WALK){
-            if (pet.x > GAME_SCREEN_SIZE.width - pet.width) {
-                speedX *= switchDirection;
-                movementDirectionX = MovementDirection.LEFT;
-            }
+        if (pet instanceof Dog) {
+            if (pet.animation.getPetAction() == CorgiAction.JUMP ||
+                    pet.animation.getPetAction() == CorgiAction.WALK ||
+                    pet.animation.getPetAction() == CorgiAction.RUN ||
+                    pet.animation.getPetAction() == CorgiAction.SNIFF_WALK) {
+                if (pet.x > GAME_SCREEN_SIZE.width - pet.width) {
+                    speedX *= switchDirection;
+                    movementDirectionX = MovementDirection.LEFT;
+                }
 
-            if (pet.x < 0) {
-                speedX *= switchDirection;
-                movementDirectionX = MovementDirection.RIGHT;
-            }
+                if (pet.x < 0) {
+                    speedX *= switchDirection;
+                    movementDirectionX = MovementDirection.RIGHT;
+                }
 
-            if (pet.y > GAME_SCREEN_SIZE.height - pet.height) {
-                speedY *= switchDirection;
-            }
+                if (pet.y > GAME_SCREEN_SIZE.height - pet.height) {
+                    speedY *= switchDirection;
+                }
 
-            if (pet.y < 0) {
-                speedY *= switchDirection;
-            }
+                if (pet.y < 0) {
+                    speedY *= switchDirection;
+                }
 
-            pet.x += speedX;
+                pet.x += speedX;
 //            pet.y += speedY;
+            }
         }
+
+        if (pet instanceof Cat) {
+            PetAction petAction = pet.animation.getPetAction();
+            if (petAction == CatAction.WALK || petAction == CatAction.JUMP_RUN) {
+                if (pet.x > GAME_SCREEN_SIZE.width - pet.width) {
+                    speedX *= switchDirection;
+                    movementDirectionX = MovementDirection.LEFT;
+                }
+
+                if (pet.x < 0) {
+                    speedX *= switchDirection;
+                    movementDirectionX = MovementDirection.RIGHT;
+                }
+
+                System.out.println("Cat Y: "+ pet.y+" Game Screen Height : "+ (GAME_SCREEN_SIZE.height - pet.height));
+                if (pet.y > GAME_SCREEN_SIZE.height - pet.height) {
+                    speedY = RANDOM_Y_MOVEMENT();
+                    speedY *= switchDirection;
+                }
+
+                if (pet.y < 0) {
+                    speedY = RANDOM_Y_MOVEMENT();
+                    speedY *= switchDirection;
+                }
+
+                pet.x += speedX;
+                pet.y += speedY;
+            }
+        }
+
 
     }
 
     public float checkAnimation(PetAction petAction, float speedX) {
-        switch (petAction) {
-            case RUN: return  (CORGI_MOVEMENT_SPEED * 3) * ((speedX < 0 ) ? switchDirection : 1);
-            case WALK:
-            case SNIFF_WALK:
-                return  (CORGI_MOVEMENT_SPEED) * ((speedX < 0) ? switchDirection : 1);
-            case JUMP:
-                return (CORGI_MOVEMENT_SPEED * 4) * ((speedX < 0) ? switchDirection : 1);
-            default:return  speedX;
+        if (petAction.equals(CorgiAction.RUN)) {
+            return (CORGI_MOVEMENT_SPEED * 3) * ((speedX < 0) ? switchDirection : 1);
+        } else if (petAction.equals(CorgiAction.WALK) || petAction.equals(CorgiAction.SNIFF_WALK)) {
+            return (CORGI_MOVEMENT_SPEED) * ((speedX < 0) ? switchDirection : 1);
+        } else if (petAction.equals(CorgiAction.JUMP)) {
+            return (CORGI_MOVEMENT_SPEED * 4) * ((speedX < 0) ? switchDirection : 1);
+        } else if (petAction.equals(CatAction.WALK)) {
+            return (CAT_MOVEMENT_SPEED * 1) * ((speedX < 0) ? switchDirection : 1);
+        } else if (petAction.equals(CatAction.JUMP_RUN)) {
+            return (CAT_MOVEMENT_SPEED * 2) * ((speedX < 0) ? switchDirection : 1);
         }
+        return speedX;
     }
 
     public void stop() {

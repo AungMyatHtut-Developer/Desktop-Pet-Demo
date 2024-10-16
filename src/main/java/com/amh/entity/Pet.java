@@ -1,5 +1,7 @@
 package com.amh.entity;
 
+import com.amh.constants.PetAssetName;
+
 import java.awt.*;
 
 public abstract class Pet {
@@ -23,12 +25,22 @@ public abstract class Pet {
 
     public abstract void makeSound();
 
-    public abstract void render(Graphics g);
+    public abstract void render(Graphics2D g);
 
     public abstract void update();
 
     public abstract void move(int x, int y);
 
     public abstract void stopPet();
+
+    public abstract void changeColor(PetAssetName assetName);
+
+    public float getX() {
+        return this.x;
+    }
+
+    public float getY() {
+        return this.y;
+    }
 
 }

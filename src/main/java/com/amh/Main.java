@@ -22,4 +22,6 @@ public class Main {
  * -Refactor some objects and classes names to adapt design patterns
  *
  * -Added system tray icon panel feature
+ *
+ * -Added new Animal Type (cat) and add animal switch feature
  */
