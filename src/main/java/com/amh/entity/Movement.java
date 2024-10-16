@@ -64,14 +64,14 @@ public class Movement {
                     movementDirectionX = MovementDirection.RIGHT;
                 }
 
-                System.out.println("Cat Y: "+ pet.y+" Game Screen Height : "+ (GAME_SCREEN_SIZE.height - pet.height));
+
                 if (pet.y > GAME_SCREEN_SIZE.height - pet.height) {
                     speedY = RANDOM_Y_MOVEMENT();
                     speedY *= switchDirection;
                 }
 
                 if (pet.y < 0) {
-                    speedY = RANDOM_Y_MOVEMENT();
+                    speedY = -RANDOM_Y_MOVEMENT();
                     speedY *= switchDirection;
                 }
 
