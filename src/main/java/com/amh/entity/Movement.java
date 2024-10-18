@@ -20,36 +20,7 @@ public class Movement {
     }
 
     public void updatePosition(Pet pet) {
-
         speedX = checkAnimation(pet.animation.getPetAction(), speedX);
-
-        if (pet instanceof Dog) {
-            if (pet.animation.getPetAction() == CorgiAction.JUMP ||
-                    pet.animation.getPetAction() == CorgiAction.WALK ||
-                    pet.animation.getPetAction() == CorgiAction.RUN ||
-                    pet.animation.getPetAction() == CorgiAction.SNIFF_WALK) {
-                if (pet.x > GAME_SCREEN_SIZE.width - pet.width) {
-                    speedX *= switchDirection;
-                    movementDirectionX = MovementDirection.LEFT;
-                }
-
-                if (pet.x < 0) {
-                    speedX *= switchDirection;
-                    movementDirectionX = MovementDirection.RIGHT;
-                }
-
-                if (pet.y > GAME_SCREEN_SIZE.height - pet.height) {
-                    speedY *= switchDirection;
-                }
-
-                if (pet.y < 0) {
-                    speedY *= switchDirection;
-                }
-
-                pet.x += speedX;
-//            pet.y += speedY;
-            }
-        }
 
         if (pet instanceof Cat) {
             PetAction petAction = pet.animation.getPetAction();
@@ -109,5 +80,9 @@ public class Movement {
         }
 
         return MovementDirection.RIGHT;
+    }
+
+    public void setMovementDirectionX(MovementDirection movementDirectionX) {
+        this.movementDirectionX = movementDirectionX;
     }
 }

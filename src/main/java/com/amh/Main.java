@@ -24,4 +24,6 @@ public class Main {
  * -Added system tray icon panel feature
  *
  * -Added new Animal Type (cat) and add animal switch feature
+ *
+ * -Added Dog AI (wander random position and stop)
  */
