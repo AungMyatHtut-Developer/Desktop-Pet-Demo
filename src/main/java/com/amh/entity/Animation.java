@@ -62,6 +62,10 @@ public class Animation {
         this.frames = frames;
     }
 
+    public int getFrames() {
+        return this.frames.length;
+    }
+
     public BufferedImage getCurrentFrame() {
         return frames[petAction.getAction()][currentFrame];
     }

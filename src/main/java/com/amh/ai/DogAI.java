@@ -7,8 +7,7 @@ import com.amh.entity.Dog;
 
 import java.util.Random;
 
-import static com.amh.common.CommonData.CORGI_MOVEMENT_SPEED;
-import static com.amh.common.CommonData.GAME_SCREEN_SIZE;
+import static com.amh.common.CommonData.*;
 import static com.amh.common.CommonFunctions.*;
 
 public class DogAI {
@@ -22,7 +21,7 @@ public class DogAI {
     boolean isStop;
     MovementDirection movementDirectionX;
 
-    private float speedX, speedY;
+    private float speedX, speedY = CORGI_MOVEMENT_SPEED;
     private int switchDirection = -1;
 
     public void wander(Dog dog) {
@@ -32,11 +31,11 @@ public class DogAI {
 
         if (interval <= 0) {
             if (randomStop) {
-                randomStopAction();
+                randomStopAction(dog);
 
                 interval = random.nextInt(400);
             } else {
-                randomMovementAction();
+                randomMovementAction(dog);
                 interval = random.nextInt(700);
             }
 
@@ -62,13 +61,21 @@ public class DogAI {
         updatePosition(dog);
     }
 
-    public void randomMovementAction() {
-        this.petAction = RANDOM_MOVEMENT_ACTION_FOR_CORGI();
+    public void randomMovementAction(Dog dog) {
+        if (dog.getAnimation().getFrames() > 8) {
+            this.petAction = RANDOM_MOVEMENT_ACTION_FOR_CORGI_V2();
+        }else{
+            this.petAction = RANDOM_MOVEMENT_ACTION_FOR_CORGI();
+        }
         this.isStop = false;
     }
 
-    public void randomStopAction() {
-        this.petAction = RANDOM_STOP_ACTION_FOR_CORGI();
+    public void randomStopAction(Dog dog) {
+        if (dog.getAnimation().getFrames() > 8) {
+            this.petAction = RANDOM_STOP_ACTION_FOR_CORGI_V2();
+        }else{
+            this.petAction = RANDOM_STOP_ACTION_FOR_CORGI();
+        }
         this.isStop = true;
     }
 
@@ -78,7 +85,9 @@ public class DogAI {
         if (dog.getAction() == CorgiAction.JUMP ||
                 dog.getAction() == CorgiAction.WALK ||
                 dog.getAction() == CorgiAction.RUN ||
-                dog.getAction() == CorgiAction.SNIFF_WALK) {
+                dog.getAction() == CorgiAction.SNIFF_WALK ||
+                dog.getAction() == CorgiAction.RUN_WITH_BALL ||
+                dog.getAction() == CorgiAction.RUN_WITH_STICK) {
 
 
             if (movementDirectionX == MovementDirection.RIGHT && !(dog.getX() >= GAME_SCREEN_SIZE.width - dog.getWidth())) {
@@ -115,6 +124,10 @@ public class DogAI {
             return (CORGI_MOVEMENT_SPEED) * ((speedX < 0) ? switchDirection : 1);
         } else if (petAction.equals(CorgiAction.JUMP)) {
             return (CORGI_MOVEMENT_SPEED * 4) * ((speedX < 0) ? switchDirection : 1);
+        } else if (petAction.equals(CorgiAction.RUN_WITH_BALL)) {
+            return (CORGI_MOVEMENT_SPEED * 3) * ((speedX < 0) ? switchDirection : 1);
+        }else if (petAction.equals(CorgiAction.RUN_WITH_STICK)) {
+            return (CORGI_MOVEMENT_SPEED * 3) * ((speedX < 0) ? switchDirection : 1);
         }
         return speedX;
     }

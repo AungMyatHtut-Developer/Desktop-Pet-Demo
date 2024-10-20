@@ -11,7 +11,7 @@ public class CommonData {
     public static final double UPS = 1_000_000_000 / 60;
 
     public static final String CORGI_WITH_TAIL_IMG ="corgi-asset-tail.png";
-    public static final String CORGI_WITH_NO_TAIL_IMG ="corgi-asset-notail.png";
+    public static final String CORGI_WITH_NO_TAIL_IMG ="corgi-asset-notail-v2.png";
     public static final String CORGI_TRICOLOR_WITH_TAIL_IMG ="tricolorcorgi-asset-tail.png";
     public static final String CORGI_TRICOLOR_WITH_NO_TAIL_IMG ="tricolorcorgi-asset-notail.png";
     public static final String CAT = "cat.png";

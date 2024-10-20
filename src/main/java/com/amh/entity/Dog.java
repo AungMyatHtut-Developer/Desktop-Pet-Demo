@@ -97,4 +97,8 @@ public class Dog extends Pet {
     public void updateY(float y) {
         this.y = y;
     }
+
+    public Animation getAnimation() {
+        return animation;
+    }
 }

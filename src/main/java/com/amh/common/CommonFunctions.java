@@ -39,7 +39,7 @@ public class CommonFunctions {
         int ran = random.nextInt(4);
 
         switch (ran) {
-            case 0: return CorgiAction.JUMP;
+            case 1: return CorgiAction.JUMP;
             case 2: return CorgiAction.RUN;
             case 3: return CorgiAction.SNIFF_WALK;
             default: return CorgiAction.WALK;
@@ -50,9 +50,39 @@ public class CommonFunctions {
         int ran = random.nextInt(4);
 
         switch (ran) {
-            case 0: return CorgiAction.IDLE1;
+            case 1: return CorgiAction.IDLE1;
             case 2: return CorgiAction.IDLE2;
             case 3: return CorgiAction.SIT;
+            default: return CorgiAction.SNIFF;
+        }
+    }
+
+    public static CorgiAction RANDOM_MOVEMENT_ACTION_FOR_CORGI_V2() {
+        int ran = random.nextInt(6);
+
+        switch (ran) {
+            case 1: return CorgiAction.JUMP;
+            case 2: return CorgiAction.RUN;
+            case 3: return CorgiAction.SNIFF_WALK;
+            case 4: return CorgiAction.RUN_WITH_BALL;
+            case 5: return CorgiAction.RUN_WITH_STICK;
+            default: return CorgiAction.WALK;
+        }
+    }
+
+    public static CorgiAction RANDOM_STOP_ACTION_FOR_CORGI_V2() {
+        int ran = random.nextInt(10);
+
+        switch (ran) {
+            case 1: return CorgiAction.IDLE1;
+            case 2: return CorgiAction.IDLE2;
+            case 3: return CorgiAction.SIT;
+//            case 4: return CorgiAction.DROP_BALL;
+//            case 5: return CorgiAction.PICKUP_BALL;
+            case 6: return CorgiAction.LYING;
+            case 7: return CorgiAction.SLEEPING;
+//            case 8: return CorgiAction.DROP_STICK;
+//            case 9: return CorgiAction.PICKUP_STICK;
             default: return CorgiAction.SNIFF;
         }
     }

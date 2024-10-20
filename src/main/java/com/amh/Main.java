@@ -26,4 +26,6 @@ public class Main {
  * -Added new Animal Type (cat) and add animal switch feature
  *
  * -Added Dog AI (wander random position and stop)
+ *
+ * -Added New Animations and Behavior for Corgi with no tail
  */

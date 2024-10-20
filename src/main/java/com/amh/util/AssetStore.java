@@ -23,8 +23,14 @@ public class AssetStore {
     }
 
     public static BufferedImage[][] GetCorgiAnimations(PetAssetName petAssetName){
-        BufferedImage[][] animations = new BufferedImage[8][11];
+        BufferedImage[][] animations;
         BufferedImage rawSprite = checkCorgiAsset(petAssetName);
+
+        if(petAssetName== PetAssetName.CORGI_TRI_COLOR_WITH_NO_TAIL){
+           animations = new BufferedImage[16][13];
+        }else{
+            animations = new BufferedImage[8][11];
+        }
 
         for (int y = 0; y < animations.length; y++) {
             for (int x = 0; x < animations[y].length; x++) {
